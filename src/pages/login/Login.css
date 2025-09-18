@@ -1,0 +1,141 @@
+.lab-btn {
+  background-color: #e91e63;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+  background: rgba(0, 0, 0, 0.7);
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background: white;
+  padding: 30px;
+  max-width: 550px;
+  width: 90%;
+  max-height: 90%;
+  overflow-y: auto;
+  border-radius: 15px;
+  position: relative;
+  text-align: left;
+}
+
+.modal-content h2 {
+  color: rgb(243, 59, 120);
+  font-size: 26px;
+}
+
+.modal-content h3 {
+  color: #002366;
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+.modal-content p {
+  margin: 10px 0;
+  line-height: 1.6;
+}
+
+.modal-content label {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.modal-content input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.proceed-btn {
+  margin-top: 20px;
+  background-color: gray;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: not-allowed;
+}
+
+.proceed-btn.enabled {
+  background: #e91e63;
+  cursor: pointer;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 22px;
+  color: red;
+  cursor: pointer;
+}
+
+.terms-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  /* checkbox aur text ke beech space */
+  cursor: pointer;
+}
+
+.terms-checkbox {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.terms-text {
+  font-weight: 600;
+  color: #e91e63;
+  /* pink color */
+}
+/* ✅ Browser ka default password eye hide karne ke liye */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
+}
+ 
+input[type="password"]::-webkit-credentials-auto-fill-button {
+  visibility: hidden;
+  display: none !important;
+}
+ 
+/* ✅ Password wrapper styling */
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+ 
+.password-wrapper input {
+  width: 100%;
+  padding-right: 40px; /* 👁️ ke liye jagah */
+}
+ 
+/* ✅ Custom toggle eye */
+.toggle-eye {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 18px;
+  color: #555;
+}
+ 
+.toggle-eye.active {
+  color: #e91e63; /* active hone par color change */
+}

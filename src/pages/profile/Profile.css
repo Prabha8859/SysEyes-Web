@@ -1,0 +1,354 @@
+/* Add all the CSS styles from the original HTML here */
+
+        .profile-section {
+          padding: 60px 0;
+          background: #fff8fa;
+        }
+
+        .carousel-container {
+          position: relative;
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 50px;
+          overflow: hidden;
+        }
+
+        .card-container {
+          display: flex;
+          transition: transform 0.5s ease;
+          padding: 20px 0;
+        }
+
+        .arrow-btn {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          background: #e91e63;
+          color: white;
+          border: none;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          font-size: 18px;
+          cursor: pointer;
+          z-index: 10;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.3s ease;
+          box-shadow: 0 4px 15px rgba(233, 30, 99, 0.3);
+        }
+
+        .arrow-btn:hover {
+          background: #c2185b;
+          transform: translateY(-50%) scale(1.1);
+        }
+
+        .left-arrow {
+          left: 0;
+        }
+
+        .right-arrow {
+          right: 0;
+        }
+
+        @media (max-width: 768px) {
+          .carousel-container {
+            padding: 0 40px;
+          }
+
+          .arrow-btn {
+            width: 35px;
+            height: 35px;
+            font-size: 16px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .carousel-container {
+            padding: 0 30px;
+          }
+
+          .arrow-btn {
+            width: 30px;
+            height: 30px;
+            font-size: 14px;
+          }
+        }
+.carousel-container {
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+}
+
+.profile-section {
+  padding: 60px 20px;
+  background: #fffdfd;
+}
+
+.chat-btn i {
+  font-size: 18px;
+  color: white;
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 25px;
+  transition: transform 0.5s ease;
+}
+
+.user-card {
+  flex: 0 0 290px;
+  background: rgb(253, 243, 243) !important;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+
+.user-card:hover {
+  transform: translateY(-5px);
+}
+
+.user-image {
+  position: relative;
+  overflow: hidden;
+}
+
+.user-image img {
+  width: 90%;
+  height: 250px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto;
+  padding-top: 10px;
+}
+
+.hover-overlay {
+  position: absolute;
+  top: 0;
+  left: 5%;
+  height: 100%;
+  width: 90%;
+  border-radius: 50%;
+  background: rgba(59, 58, 58, 0.5);
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s ease;
+}
+
+.user-image:hover .hover-overlay {
+  opacity: 1;
+}
+
+.hover-overlay .more-link {
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  text-decoration: none;
+}
+
+.hover-overlay span {
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.user-info {
+  text-align: center;
+  padding: 15px;
+}
+
+.user-info h4 {
+  margin: 10px 0 5px;
+  color: #f39c12;
+}
+
+.user-info p {
+  color: #666;
+  font-size: 14px;
+}
+
+.btn-group {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.chat-btn {
+  padding: 8px 12px;
+  background-image: linear-gradient(to right, #f78ca0 0%, #f9748f 19%, #fd868c 60%, #fe9a8b 100%);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.chat-btn:hover {
+  transform: scale(1.05);
+}
+
+.send-btn {
+  background-image: linear-gradient(to right, #f78ca0 0%, #f9748f 19%, #fd868c 60%, #fe9a8b 100%);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.send-btn.sent {
+  background-color: gray;
+}
+
+.cancel-request {
+  background-color: rgb(232, 123, 123) !important;
+}
+
+.cancel-request:hover {
+  background-color: #666 !important;
+}
+
+.popup {
+  display: none;
+  background: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 5px;
+  z-index: 999;
+  font-size: 16px;
+}
+
+.heart {
+  position: absolute;
+  animation: fly 1s ease-out forwards;
+}
+
+@keyframes fly {
+  0% { transform: translate(0,0) scale(1); opacity: 1; }
+  100% { 
+    transform: translate(var(--x), var(--y)) scale(0.5); 
+    opacity: 0; 
+  }
+}
+
+.arrow-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  z-index: 10;
+  border-radius: 50%;
+  font-size: 18px;
+}
+
+.arrow-left { 
+  left: 10px; 
+  background-color: #f3125d !important;
+}
+
+.arrow-right { 
+  right: 10px; 
+  background-color: #f3127b !important;
+}
+
+.name-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 0;
+  gap: 10px;
+}
+
+.online-dot {
+  position: relative;
+  width: 10px;
+  height: 10px;
+  background-color: #2dac31;
+  border-radius: 50%;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(63, 226, 68, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(76, 175, 80, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
+  }
+}
+
+.offline-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.offline-status::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  background-color: gray;
+  border-radius: 50%;
+}
+
+.profile-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #fff;
+}
+
+.profile-icon {
+  position: relative;
+  width: 35px;
+  height: 35px;
+  margin-right: 8px;
+}
+
+.profile-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.status-dot {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 8px;
+  height: 8px;
+  background: green;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+.profile-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #29004b;
+}

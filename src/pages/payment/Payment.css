@@ -1,0 +1,140 @@
+
+        body {
+          font-family: 'Segoe UI', sans-serif;
+          background: #f4f6fa;
+          margin: 0;
+          padding: 0;
+        }
+
+        .container {
+          max-width: 400px;
+          margin: 40px auto;
+          background: #fff;
+          padding: 30px;
+          border-radius: 12px;
+          box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .heading {
+          font-size: 26px;
+          padding: 15px;
+          border-radius: 10px;
+          background: linear-gradient(135deg, #f0f4ff, #e0e9ff);
+          color: #f34981;
+          box-shadow: 0 4px 12px rgba(0, 87, 231, 0.15);
+          transition: all 0.3s ease;
+          display: inline-block;
+          animation: pulseIcon 1.5s infinite ease-in-out;
+        }
+
+        .heading:hover {
+          background: linear-gradient(135deg, #ffe0f5, #ffd3ea);
+          color: #ee4281;
+          transform: scale(1.02);
+        }
+
+        .heading i {
+          margin-right: 10px;
+          color: #fd6ab1;
+          transition: transform 0.3s ease;
+        }
+
+        .heading:hover i {
+          transform: rotate(10deg) scale(1.2);
+        }
+
+        @keyframes pulseIcon {
+          0%, 100% {
+            transform: scale(1);
+          }
+          50% {
+            transform: scale(1.06);
+          }
+        }
+
+        .tabs {
+          display: flex;
+          justify-content: space-between;
+          border-bottom: 2px solid #ddd;
+          margin-bottom: 20px;
+          overflow-x: auto;
+        }
+
+        .tab {
+          flex: 1;
+          text-align: center;
+          padding: 12px 10px;
+          cursor: pointer;
+          border-bottom: 3px solid transparent;
+          font-weight: 600;
+          color: #555;
+          transition: 0.3s;
+        }
+
+        .tab i {
+          margin-right: 8px;
+        }
+
+        .tab.active {
+          color: #ec4b8e;
+          border-color: #fa50b0;
+          background: #f0f7ff;
+          border-radius: 5px 5px 0 0;
+        }
+
+        .payment-content {
+          display: block;
+        }
+
+        .qr-section {
+          text-align: center;
+        }
+
+        .qr-section img {
+          max-width: 180px;
+          margin-bottom: 10px;
+          border-radius: 8px;
+        }
+
+        .input-group {
+          margin: 15px 0;
+        }
+
+        .input-group input, .input-group select {
+          width: 100%;
+          padding: 12px;
+          border-radius: 8px;
+          border: 1px solid #ccc;
+          font-size: 16px;
+        }
+
+        label {
+          font-weight: 600;
+          margin-bottom: 5px;
+          display: block;
+          color: #333;
+        }
+
+        button {
+          background: #f76fb8;
+          color: white;
+          border: none;
+          padding: 14px 24px;
+          border-radius: 8px;
+          cursor: pointer;
+          font-size: 16px;
+          width: 100%;
+          margin-top: 10px;
+          transition: 0.3s;
+        }
+
+        button:hover {
+          background: #f74e75;
+        }
+
+        @media (max-width: 600px) {
+          .tab {
+            font-size: 14px;
+            padding: 10px 6px;
+          }
+        }

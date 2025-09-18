@@ -1,0 +1,192 @@
+
+        .page-header-section.style-1 {
+          background-color: #ffc0cb; /* pink background */
+          padding: 40px 0;
+        }
+        
+        .page-title h2 {
+          color: #333;
+          margin-bottom: 10px;
+        }
+        
+        .breadcrumb {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          display: flex;
+        }
+        
+        .breadcrumb li {
+          margin-right: 5px;
+        }
+        
+        .breadcrumb li:not(:last-child):after {
+          content: '/';
+          margin-left: 5px;
+        }
+        
+        .breadcrumb li.active {
+          color: #e91e63;
+        }
+        
+        .pricing-section {
+          padding: 60px 0;
+        }
+        
+        .section-header h4 {
+          color: #e91e63;
+        }
+        
+        .section-header h2 {
+          margin-top: 10px;
+        }
+        
+        .price-item {
+          background: white;
+          border-radius: 15px;
+          overflow: hidden;
+          box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+          transition: transform 0.3s ease;
+        }
+        
+        .price-item:hover {
+          transform: translateY(-5px);
+        }
+        
+        .price-item-inner {
+          padding: 30px;
+        }
+        
+        .price-top {
+          text-align: center;
+          padding-bottom: 20px;
+          border-bottom: 1px solid #eee;
+        }
+        
+        .price-top h6 {
+          color: #e91e63;
+          font-size: 18px;
+          margin-bottom: 15px;
+        }
+        
+        .price-top h2 {
+          font-size: 36px;
+          margin-bottom: 10px;
+        }
+        
+        .price-top p {
+          color: #777;
+        }
+        
+        .price-bottom {
+          padding-top: 20px;
+        }
+        
+        .price-bottom ul {
+          list-style: none;
+          padding: 0;
+          margin-bottom: 25px;
+        }
+        
+        .price-bottom ul li {
+          margin-bottom: 10px;
+          display: flex;
+          align-items: center;
+        }
+        
+        .price-bottom ul li i {
+          margin-right: 10px;
+          font-size: 18px;
+        }
+        
+        .price-bottom ul li i.icofont-check-circled {
+          color: #4CAF50;
+        }
+        
+        .price-bottom ul li i.icofont-close-circled {
+          color: #F44336;
+        }
+        
+        .purchase-btn {
+          display: block;
+          text-align: center;
+          background: #e91e63;
+          color: white;
+          padding: 12px 20px;
+          border-radius: 30px;
+          text-decoration: none;
+          font-weight: 600;
+          transition: background 0.3s ease;
+        }
+        
+        .purchase-btn:hover {
+          background: #c2185b;
+        }
+        
+        /* Payment Modal Styles */
+        .pay-modal {
+          position: fixed;
+          z-index: 9999;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, .7);
+          overflow-y: auto;
+        }
+        
+        .pay-content {
+          background: #fff;
+          border-radius: 20px;
+          width: 340px;
+          margin: 6% auto;
+          padding: 25px 20px;
+          text-align: center;
+          position: relative;
+          box-shadow: 0 12px 30px rgba(0, 0, 0, .45);
+          animation: zoom .4s;
+        }
+        
+        @keyframes zoom {
+          from {
+            transform: scale(.5);
+            opacity: 0;
+          }
+          to {
+            transform: scale(1);
+            opacity: 1;
+          }
+        }
+        
+        .pay-close {
+          position: absolute;
+          right: 15px;
+          top: 5px;
+          cursor: pointer;
+          font-size: 25px;
+          font-weight: 600;
+        }
+        
+        .pay-content img {
+          width: 200px;
+          margin: 10px auto;
+        }
+        
+        .utrInput {
+          width: 90%;
+          padding: 10px;
+          margin: 12px 0;
+          border: 1px solid #ccc;
+          border-radius: 8px;
+        }
+        
+        .submitPay {
+          padding: 10px 25px;
+          background: #ff0048;
+          color: #fff;
+          border: none;
+          border-radius: 30px;
+          font-weight: 600;
+          font-size: 15px;
+          cursor: pointer;
+        }
