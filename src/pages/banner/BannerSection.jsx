@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import img01 from '../../assets/images/banner/01.png'
+import img02 from '../../assets/images/banner/google.png'
 
 const BannerSection = () => {
   // State for form data
@@ -154,8 +155,8 @@ const BannerSection = () => {
                     </form>
                     <ul className="social-list">
                       <li className="google">
-                        <a href="#">
-                          <img src="assets/images/banner/google.png" alt="Google" />
+                        <a href="/">
+                          <img src={img02} alt="Google" />
                           <span>Continue with Google</span>
                         </a>
                       </li>

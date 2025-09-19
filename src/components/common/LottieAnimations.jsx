@@ -29,3 +29,17 @@ const LottieAnimations = () => {
 };
 
 export default LottieAnimations;
+
+
+// import { Link } from 'react-router-dom';
+// import img1 from '../../assets/images/group/01.jpg';
+// import img2 from '../../assets/images/group/02.jpg';
+// import img3 from '../../assets/images/group/03.jpg';
+// import img4 from '../../assets/images/group/04.jpg';
+
+// import mem1 from '../../assets/images/group/group-mem/01.png';
+// import mem2 from '../../assets/images/group/group-mem/01.png';
+// import mem3 from '../../assets/images/group/group-mem/01.png';
+// import mem4 from '../../assets/images/group/group-mem/01.png';
+// import mem5 from '../../assets/images/group/group-mem/01.png';
+// import mem6 from '../../assets/images/group/group-mem/06.png'

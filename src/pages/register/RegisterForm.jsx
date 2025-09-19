@@ -2,10 +2,18 @@ import React, { useEffect, useState, useRef } from 'react';
 import { User, Mail, Phone, MapPin, Lock, Eye, EyeOff, Camera, Calendar } from 'lucide-react';
 import image1 from '../../assets/images/Story1.jpg';
 import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { registerUserStep2 } from "./API/registrationSlice";
+
 import './Register.css';
+// import api from "../../api/axios";
+import api from "axios";
 
 const MultiStepRegistration = () => {
   const [currentStep, setCurrentStep] = useState(1);
+
+  
   
   // Step 1 data
   const [formData, setFormData] = useState({
@@ -20,12 +28,12 @@ const MultiStepRegistration = () => {
 
   // Step 2 data
   const [personalData, setPersonalData] = useState({
-    dob: 'Enter Date of Birth',
-    age: 18,
+    dob: '',
+    age: '',
     gender: 'male/Female',
     location: {
-      street: 'Enter Your Street',
-      city: 'Enter your City',
+      street: '',
+      city: '',
       state: '',
       country: ''
     },
@@ -42,6 +50,7 @@ const MultiStepRegistration = () => {
   const [showOtpPopup, setShowOtpPopup] = useState(false);
   const [message, setMessage] = useState('');
   const [showMessage, setShowMessage] = useState(false);
+  
 
   const dobRef = useRef(null);
   const fileInputRef = useRef(null);
@@ -154,45 +163,75 @@ const MultiStepRegistration = () => {
       }
     }));
   };
+const handleFinalSubmit = async () => {
+  try {
+    setLoading(true);
 
-  const handleFinalSubmit = async () => {
-    try {
-      if (personalData.file && personalData.file.size > 2 * 1024 * 1024) {
-        showMessageBox("Profile image must be less than 2MB.");
-        return;
-      }
-
-      setLoading(true);
-
-      // Format DOB
-      const birthDate = new Date(personalData.dob);
-      const formattedDob = `${birthDate
-        .getDate()
-        .toString()
-        .padStart(2, "0")} ${birthDate.toLocaleString("en-GB", {
-        month: "long",
-      })} ${birthDate.getFullYear()}`;
-
-      // Simulate API call
-      setTimeout(() => {
-        setLoading(false);
-        showMessageBox("Registration Completed Successfully!");
-        console.log("Registration Data:", {
-          step1: formData,
-          step2: {
-            ...personalData,
-            dob: formattedDob,
-            location: Object.values(personalData.location).filter(Boolean).join(", ")
-          }
-        });
-      }, 2000);
-
-    } catch (error) {
-      console.error("Error:", error);
-      showMessageBox("Server error. Please try again later.");
+    // 📌 Image validation
+    if (personalData.file && personalData.file.size > 2 * 1024 * 1024) {
+      showMessageBox("Profile image must be less than 2MB.");
       setLoading(false);
+      return;
     }
-  };
+
+    // Format DOB (YYYY-MM-DD required by API)
+    const birthDate = new Date(personalData.dob);
+    const formattedDob = birthDate.toISOString().split("T")[0]; // e.g. 1995-05-12
+
+    // ✅ API body
+    const payload = {
+      firstName: formData.firstname,
+      lastName: formData.lastname,
+      email: formData.email,
+      phoneNo: formData.phone,
+      password: formData.password,
+      dob: formattedDob,
+      age: personalData.age,
+      gender: personalData.gender,
+      street: personalData.location.street,
+      city: personalData.location.city,
+      state: personalData.location.state,
+      country: personalData.location.country,
+      postalCode: personalData.location.postalCode || "000000", // fallback
+      bio: personalData.about,
+      hobbies: ["Reading", "Traveling"],
+    };
+
+    // ✅ Real API call
+    const res = await api.post(
+      "https://shyeyes-b.onrender.com/api/users/register",
+      payload
+    );
+
+    setLoading(false);
+    showMessageBox(res.data.message || "Registration Completed Successfully!");
+    console.log("User registered:", res.data);
+
+    // 🚨 Agar aap sirf testing ke liye setTimeout use karna chahte the,
+    // toh usko rakho, warna hata do (kyunki ab API call already ho rahi hai)
+    /*
+    setTimeout(() => {
+      setLoading(false);
+      showMessageBox("Registration Completed Successfully!");
+      console.log("Registration Data:", {
+        step1: formData,
+        step2: {
+          ...personalData,
+          dob: formattedDob,
+          location: Object.values(personalData.location).filter(Boolean).join(", ")
+        }
+      });
+    }, 2000);
+    */
+
+  } catch (error) {
+    console.error("Error:", error);
+    setLoading(false);
+    showMessageBox(
+      error.response?.data?.message || "Server error. Please try again later."
+    );
+  }
+};
 
   const goBackToStep1 = () => {
     setCurrentStep(1);
