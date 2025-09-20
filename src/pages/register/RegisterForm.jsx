@@ -2,9 +2,9 @@ import React, { useEffect, useState, useRef } from 'react';
 import { User, Mail, Phone, MapPin, Lock, Eye, EyeOff, Camera, Calendar } from 'lucide-react';
 import image1 from '../../assets/images/Story1.jpg';
 import { Link } from 'react-router-dom';
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { registerUserStep2 } from "./API/registrationSlice";
+// import React, { useState } from "react";
+// import { useDispatch, useSelector } from "react-redux";
+// import { registerUserStep2 } from "./API/registrationSlice";
 
 import './Register.css';
 // import api from "../../api/axios";

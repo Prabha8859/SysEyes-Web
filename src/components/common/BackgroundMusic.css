@@ -1,0 +1,780 @@
+/* BackgroundMusic.css - Updated Circular Design */
+
+.music-player-container {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 9999;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Main Music Circle */
+.music-circle {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #ff6b9d, #c44569);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 32px rgba(255, 107, 157, 0.4);
+  overflow: visible;
+  user-select: none;
+}
+
+.music-circle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 12px 40px rgba(255, 107, 157, 0.6);
+}
+
+.music-circle:active {
+  transform: scale(1.05);
+}
+
+.music-icon {
+  color: white;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.music-icon.playing {
+  animation: rotate 3s linear infinite;
+}
+
+/* Pulse Rings */
+.pulse-ring,
+.pulse-ring-2 {
+  position: absolute;
+  border: 3px solid rgba(255, 107, 157, 0.3);
+  border-radius: 50%;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  pointer-events: none;
+}
+
+.pulse-ring {
+  width: 85px;
+  height: 85px;
+}
+
+.pulse-ring-2 {
+  width: 100px;
+  height: 100px;
+  animation-delay: 0.5s;
+}
+
+/* Track Indicator */
+.track-indicator {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 24px;
+  height: 24px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  border: 2px solid #ff6b9d;
+  pointer-events: none;
+}
+
+/* Controls Panel */
+.controls-panel {
+  position: absolute;
+  bottom: 80px;
+  right: 0;
+  width: 320px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 0.2);
+  transform: translateY(20px) scale(0.9);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 107, 157, 0.1);
+}
+
+.controls-panel.show {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+  visibility: visible;
+}
+
+.controls-panel::before {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  right: 30px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid rgba(255, 255, 255, 0.95);
+}
+
+/* Panel Header */
+.controls-panel h4 {
+  margin: 0 0 16px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #2d3748;
+  text-align: center;
+  background: linear-gradient(135deg, #ff6b9d, #c44569);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Track Selection */
+.track-selection {
+  margin-bottom: 20px;
+}
+
+.track-options {
+  display: flex;
+  gap: 8px;
+}
+
+.track-btn {
+  flex: 1;
+  background: #f7fafc;
+  border: 2px solid transparent;
+  border-radius: 16px;
+  padding: 12px 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+  overflow: hidden;
+}
+
+.track-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transition: left 0.5s;
+}
+
+.track-btn:hover::before {
+  left: 100%;
+}
+
+.track-btn:hover {
+  background: #edf2f7;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.track-btn.active {
+  background: linear-gradient(135deg, #ff6b9d, #c44569);
+  color: white;
+  border-color: #ff6b9d;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 107, 157, 0.3);
+}
+
+.track-emoji {
+  font-size: 20px;
+  display: block;
+  transition: transform 0.2s ease;
+}
+
+.track-btn:hover .track-emoji {
+  transform: scale(1.2);
+}
+
+.track-label {
+  font-size: 12px;
+  font-weight: 500;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+/* Playback Controls */
+.playback-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding: 16px 0;
+  background: linear-gradient(135deg, #f8fafc, #edf2f7);
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.playback-controls::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #ff6b9d, #c44569, #ff6b9d);
+  background-size: 200% 100%;
+  animation: shimmer 3s linear infinite;
+}
+
+.control-btn {
+  background: white;
+  border: 2px solid #e2e8f0;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #4a5568;
+  position: relative;
+  overflow: hidden;
+}
+
+.control-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #ff6b9d, #c44569);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  border-radius: 50%;
+}
+
+.control-btn:hover::before {
+  opacity: 1;
+}
+
+.control-btn:hover {
+  border-color: #ff6b9d;
+  color: white;
+  transform: scale(1.1);
+  box-shadow: 0 4px 16px rgba(255, 107, 157, 0.3);
+}
+
+.control-btn svg {
+  position: relative;
+  z-index: 1;
+}
+
+.main-play-btn {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #ff6b9d, #c44569);
+  border-color: #ff6b9d;
+  color: white;
+  box-shadow: 0 6px 20px rgba(255, 107, 157, 0.4);
+}
+
+.main-play-btn::before {
+  background: linear-gradient(135deg, #ff5a8a, #b23a5a);
+  opacity: 0;
+}
+
+.main-play-btn:hover {
+  transform: scale(1.15);
+  box-shadow: 0 8px 25px rgba(255, 107, 157, 0.5);
+}
+
+.main-play-btn:hover::before {
+  opacity: 1;
+}
+
+/* Current Track Info */
+.current-track-info {
+  text-align: center;
+  margin-bottom: 8px;
+  padding: 10px;
+  background: linear-gradient(135deg, #f0fff4, #f7fafc);
+  border-radius: 16px;
+  border: 1px solid rgba(72, 187, 120, 0.1);
+}
+
+.track-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, #2d3748, #4a5568);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.track-status {
+  font-size: 14px;
+  color: #718096;
+}
+
+.playing-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #48bb78;
+  font-weight: 500;
+}
+
+.sound-wave {
+  display: flex;
+  gap: 2px;
+  align-items: end;
+}
+
+.wave-bar {
+  width: 3px;
+  height: 4px;
+  background: #48bb78;
+  border-radius: 1.5px;
+  animation: wave 1s ease-in-out infinite;
+}
+
+.wave-bar:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.wave-bar:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.wave-bar:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+.paused-indicator {
+  color: #a0aec0;
+  font-style: italic;
+}
+
+/* Close Button */
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(247, 250, 252, 0.8);
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 20px;
+  color: #a0aec0;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(10px);
+}
+
+.close-btn:hover {
+  background: rgba(226, 232, 240, 0.9);
+  color: #4a5568;
+  transform: scale(1.1);
+}
+
+/* Overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: transparent;
+  z-index: -1;
+}
+
+/* Enhanced animations when expanded */
+.music-player-container.expanded .music-circle {
+  background: linear-gradient(135deg, #48bb78, #38a169);
+  box-shadow: 0 12px 40px rgba(72, 187, 120, 0.6);
+}
+
+.music-player-container.expanded .pulse-ring,
+.music-player-container.expanded .pulse-ring-2 {
+  border-color: rgba(72, 187, 120, 0.3);
+}
+
+.music-player-container.expanded .track-indicator {
+  border-color: #48bb78;
+  background: #f0fff4;
+}
+
+/* Keyframe Animations */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.3);
+    opacity: 0;
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes wave {
+  0%, 100% {
+    height: 4px;
+  }
+  50% {
+    height: 12px;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Mobile Responsive Design */
+@media (max-width: 768px) {
+  .music-player-container {
+    bottom: 20px;
+    right: 20px;
+  }
+
+  .music-circle {
+    width: 60px;
+    height: 60px;
+  }
+
+  .music-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .pulse-ring {
+    width: 75px;
+    height: 75px;
+  }
+
+  .pulse-ring-2 {
+    width: 90px;
+    height: 90px;
+  }
+
+  .track-indicator {
+    width: 20px;
+    height: 20px;
+    font-size: 10px;
+    top: -6px;
+    right: -6px;
+  }
+
+  .controls-panel {
+    width: 280px;
+    bottom: 70px;
+    right: -100px;
+    padding: 20px;
+  }
+
+  .controls-panel h4 {
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+
+  .track-btn {
+    padding: 10px 6px;
+  }
+
+  .track-emoji {
+    font-size: 16px;
+  }
+
+  .track-label {
+    font-size: 10px;
+  }
+
+  .control-btn {
+    width: 44px;
+    height: 44px;
+  }
+
+  .main-play-btn {
+    width: 54px;
+    height: 54px;
+  }
+
+  .track-name {
+    font-size: 14px;
+  }
+
+  .track-status {
+    font-size: 12px;
+  }
+
+  .current-track-info {
+    padding: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .music-circle {
+    width: 55px;
+    height: 55px;
+  }
+
+  .controls-panel {
+    width: 260px;
+    right: -80px;
+    padding: 16px;
+  }
+
+  .track-options {
+    gap: 6px;
+  }
+
+  .track-btn {
+    padding: 8px 4px;
+  }
+
+  .track-emoji {
+    font-size: 14px;
+  }
+
+  .track-label {
+    font-size: 9px;
+  }
+
+  .playback-controls {
+    gap: 8px;
+    padding: 12px 0;
+  }
+
+  .control-btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .main-play-btn {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+/* High DPI Displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .music-circle {
+    box-shadow: 0 8px 32px rgba(255, 107, 157, 0.4),
+                0 2px 8px rgba(255, 107, 157, 0.2);
+  }
+  
+  .controls-panel {
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15),
+                0 8px 32px rgba(0, 0, 0, 0.1),
+                0 0 0 1px rgba(255, 255, 255, 0.2);
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .controls-panel {
+    background: rgba(45, 55, 72, 0.95);
+    border-color: rgba(255, 107, 157, 0.2);
+  }
+
+  .controls-panel h4 {
+    color: #e2e8f0;
+  }
+
+  .track-btn {
+    background: #4a5568;
+    color: #e2e8f0;
+  }
+
+  .track-btn:hover {
+    background: #2d3748;
+  }
+
+  .track-name {
+    color: #e2e8f0;
+  }
+
+  .playback-controls {
+    background: linear-gradient(135deg, #2d3748, #4a5568);
+  }
+
+  .control-btn {
+    background: #4a5568;
+    border-color: #2d3748;
+    color: #e2e8f0;
+  }
+
+  .current-track-info {
+    background: linear-gradient(135deg, #1a202c, #2d3748);
+    border-color: rgba(72, 187, 120, 0.2);
+  }
+
+  .close-btn {
+    background: rgba(45, 55, 72, 0.8);
+    color: #a0aec0;
+  }
+
+  .close-btn:hover {
+    background: rgba(26, 32, 44, 0.9);
+    color: #e2e8f0;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .music-circle,
+  .control-btn,
+  .track-btn,
+  .controls-panel {
+    transition: none;
+  }
+
+  .pulse-ring,
+  .pulse-ring-2 {
+    animation: none;
+  }
+
+  .music-icon.playing {
+    animation: none;
+  }
+
+  .wave-bar {
+    animation: none;
+    height: 8px;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .music-player-container {
+    display: none !important;
+  }
+}
+
+/* Focus Styles for Accessibility */
+.music-circle:focus,
+.track-btn:focus,
+.control-btn:focus,
+.close-btn:focus {
+  outline: 2px solid #ff6b9d;
+  outline-offset: 2px;
+}
+
+/* Hover Effects for Touch Devices */
+@media (hover: none) and (pointer: coarse) {
+  .music-circle:hover,
+  .track-btn:hover,
+  .control-btn:hover {
+    transform: none;
+  }
+
+  .music-circle:active {
+    transform: scale(0.95);
+  }
+
+  .track-btn:active,
+  .control-btn:active {
+    transform: scale(0.95);
+  }
+}
+
+/* Custom Properties for Easy Theming */
+:root {
+  --music-primary: #ff6b9d;
+  --music-primary-dark: #c44569;
+  --music-success: #48bb78;
+  --music-success-dark: #38a169;
+  --music-background: rgba(255, 255, 255, 0.95);
+  --music-text: #2d3748;
+  --music-text-light: #718096;
+  --music-border: #e2e8f0;
+  --music-shadow: rgba(0, 0, 0, 0.15);
+}
+
+/* Alternative Color Themes */
+.music-player-container.theme-blue {
+  --music-primary: #4299e1;
+  --music-primary-dark: #3182ce;
+}
+
+.music-player-container.theme-green {
+  --music-primary: #48bb78;
+  --music-primary-dark: #38a169;
+}
+
+.music-player-container.theme-purple {
+  --music-primary: #9f7aea;
+  --music-primary-dark: #805ad5;
+}
+
+/* Loading State */
+.music-circle.loading {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.music-circle.loading .music-icon {
+  opacity: 0.6;
+}
+
+/* Error State */
+.music-circle.error {
+  background: linear-gradient(135deg, #f56565, #e53e3e);
+}
+
+.music-circle.error:hover {
+  box-shadow: 0 12px 40px rgba(245, 101, 101, 0.6);
+}

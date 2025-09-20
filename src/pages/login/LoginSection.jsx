@@ -180,8 +180,8 @@ const LoginSection = () => {
       <div className="login-right-section">
         <div className="login-form-container">
           <div className="login-header">
-            <h1 className="login-title">
-              <FaHeart className="title-heart" />
+            <h1 className="login-title" style={{ color: 'maroon' }}>
+              <FaHeart className="title-heart " />
               Welcome to Shy-Eyes
             </h1>
             <p className="login-subtitle">Sign in to your account</p>
@@ -191,7 +191,7 @@ const LoginSection = () => {
             {/* Email Field */}
             <div className="form-group modern-input-group">
               <div className="input-wrapper">
-                <FaUser className="input-icon" />
+                <FaUser className="input-icon" style={{ color: "pink" }} />
                 <input
                   type="email"
                   placeholder="Enter your email"
@@ -207,7 +207,7 @@ const LoginSection = () => {
             {/* Password Field */}
             <div className="form-group modern-input-group">
               <div className="input-wrapper password-input-wrapper">
-                <FaLock className="input-icon" />
+                <FaLock className="input-icon" style={{ color: "pink" }} />
                 <input
                   type={showPassword ? "text" : "password"}
                   placeholder="Enter your password"
@@ -221,7 +221,7 @@ const LoginSection = () => {
                   className="password-toggle"
                   onClick={() => setShowPassword(!showPassword)}
                 >
-                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                  {showPassword ? <FaEyeSlash style={{ color: "pink" }}/> : <FaEye style={{ color: "pink" }}/>}
                 </span>
               </div>
             </div>
@@ -240,7 +240,7 @@ const LoginSection = () => {
 
             {/* Login Button */}
             <button type="button" className="modern-login-btn" onClick={openModal}>
-              Sign In
+              Login
             </button>
           </form>
 

@@ -4,7 +4,6 @@ import img1 from '../../assets/images/contact/01.png';
 import img2 from '../../assets/images/contact/02.png';
 import img3 from '../../assets/images/contact/03.png';
 import img4 from '../../assets/images/contact/04.png';
-// import contactBg from '../../assets/images/contact/contact-bg.jpg'; // Add this image
 import './contact.css'; // Import the CSS file for styling
 
 const ContactSection = () => {
@@ -53,7 +52,7 @@ const ContactSection = () => {
         <div className="contact-hero-overlay"></div>
         <div className="contact-hero-content">
           <div className="container-fluid px-4 px-md-5">
-            <div className="row align-items-center min-vh-50">
+            <div className="row align-items-center hero-min-height">
               <div className="col-12 text-center">
                 <div className="hero-content-inner">
                   <h1 className="hero-title">Connect With Us</h1>
@@ -74,18 +73,40 @@ const ContactSection = () => {
       {/* Main Contact Section */}
       <section className="contact-main-section">
         <div className="container-fluid px-4 px-md-5">
-          <div className="row g-0">
+          <div className="row g-4">
             {/* Left Side - Enhanced Form */}
             <div className="col-lg-7">
               <div className="contact-form-card">
                 <div className="card-header">
-                  <div className="card-icon">
-                    <i className="fas fa-envelope-open-text"></i>
+                  <div className="header-content">
+                    <div className="header-icon-wrapper">
+                      <i className="fas fa-envelope-open-text header-icon"></i>
+                      <i className="fas fa-heart header-icon-secondary"></i>
+                    </div>
+                    <h3 className="card-title">Send Us a Message</h3>
+                    <p className="card-subtitle">
+                      We'd love to hear from you. Share your thoughts and we'll get back to you soon.
+                    </p>
                   </div>
-                  <h3 className="card-title">Send Us a Message</h3>
-                  <p className="card-subtitle">
-                    We'd love to hear from you. Share your thoughts and we'll get back to you soon.
-                  </p>
+                  
+                  {/* Social Links in Form Header */}
+                  <div className="form-social-links">
+                    <span className="social-label">Connect with us:</span>
+                    <div className="social-icons-inline">
+                      <a href="#" className="social-icon facebook" aria-label="Facebook">
+                        <i className="fab fa-facebook-f"></i>
+                      </a>
+                      <a href="#" className="social-icon twitter" aria-label="Twitter">
+                        <i className="fab fa-twitter"></i>
+                      </a>
+                      <a href="#" className="social-icon instagram" aria-label="Instagram">
+                        <i className="fab fa-instagram"></i>
+                      </a>
+                      <a href="#" className="social-icon linkedin" aria-label="LinkedIn">
+                        <i className="fab fa-linkedin-in"></i>
+                      </a>
+                    </div>
+                  </div>
                 </div>
                 
                 <form onSubmit={handleSubmit} className="contact-form-inner" noValidate>
@@ -161,7 +182,7 @@ const ContactSection = () => {
                         </label>
                         <textarea
                           name="message"
-                          rows="5"
+                          rows="4"
                           value={formData.message}
                           onChange={handleChange}
                           placeholder="Tell us more about your inquiry..."
@@ -206,11 +227,18 @@ const ContactSection = () => {
             <div className="col-lg-5">
               <div className="contact-info-card">
                 <div className="card-header">
-                  {/* <h3 className="card-title">Get In Touch</h3> */}
-                  <p className="card-subtitle">
-                    Find all the information you need to reach our amazing team.
-                    We're always here to help!
-                  </p>
+                  <div className="header-content">
+                    <div className="info-header-decoration">
+                      <span className="decoration-line"></span>
+                      <i className="fas fa-phone-alt info-header-icon"></i>
+                      <span className="decoration-line"></span>
+                    </div>
+                    <h3 className="card-title">Get In Touch</h3>
+                    <p className="card-subtitle">
+                      Find all the information you need to reach our amazing team.
+                      We're always here to help!
+                    </p>
+                  </div>
                 </div>
 
                 <div className="contact-info-content">
@@ -271,21 +299,17 @@ const ContactSection = () => {
                   </div>
                 </div>
 
-                {/* Social Media Links */}
-                <div className="social-links-section">
-                  <h5 className="social-title">Follow Us</h5>
-                  <div className="social-links">
-                    <a href="#" className="social-link facebook" aria-label="Facebook">
-                      <i className="fab fa-facebook-f"></i>
+                {/* Quick Contact Actions */}
+                <div className="quick-actions">
+                  <h5 className="quick-actions-title">Quick Actions</h5>
+                  <div className="action-buttons">
+                    <a href="tel:+22698745632" className="action-btn call-btn">
+                      <i className="fas fa-phone"></i>
+                      <span>Call Now</span>
                     </a>
-                    <a href="#" className="social-link twitter" aria-label="Twitter">
-                      <i className="fab fa-twitter"></i>
-                    </a>
-                    <a href="#" className="social-link instagram" aria-label="Instagram">
-                      <i className="fab fa-instagram"></i>
-                    </a>
-                    <a href="#" className="social-link linkedin" aria-label="LinkedIn">
-                      <i className="fab fa-linkedin-in"></i>
+                    <a href="mailto:admin@shy-eyes.com" className="action-btn email-btn">
+                      <i className="fas fa-envelope"></i>
+                      <span>Email Us</span>
                     </a>
                   </div>
                 </div>
@@ -294,7 +318,7 @@ const ContactSection = () => {
           </div>
 
           {/* Map Section */}
-          <div className="row mt-5">
+          <div className="row mt-4">
             <div className="col-12">
               <div className="map-section">
                 <h4 className="map-title">Find Us On Map</h4>
@@ -312,11 +336,8 @@ const ContactSection = () => {
           </div>
         </div>
       </section>
-      
     </>
-    
   );
- 
 };
 
 export default ContactSection;

@@ -3139,13 +3139,23 @@ select {
 
 
 
+.menu {
+  display: flex;
+  align-items: center; /* ✅ sab items ek line me center aligned */
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+
 
 .menu > li > a {
   color: #210053;
   font-size: 1rem;
   font-weight: bold;
   font-weight: 700;
-  padding: 20px 22px;
+  padding: 20px 18px;
+  align-items: center;
   text-transform: capitalize;
 }
 
@@ -3158,9 +3168,9 @@ select {
 
 .menu > li > a.login-btn,
 .menu > li > a.register-btn {
-  border: 1px solid #d72486;
+  border: 2px solid #d72486;
   border-radius: 6px;
-  padding: 8px 16px;
+  padding: 12px 18px; 
   margin-left: 10px;
   font-weight: 600;
   transition: all 0.3s ease;
@@ -3320,6 +3330,34 @@ select {
     transform: scaleY(1);
   }
 }
+
+.header-bar {
+  width: 25px;
+  height: 20px;
+}
+.submenu {
+  display: none;
+  padding-left: 15px;
+}
+
+.submenu.active {
+  display: block;
+  color: #000;
+}
+
+.submenu-toggle {
+  background: none;
+  border: none;
+  font: inherit;
+  color: inherit;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  cursor: pointer;
+}
+
+
 
 .header-bar {
   width: 25px;
@@ -8482,7 +8520,7 @@ body {
 .menu .nav-item {
   position: relative;
   padding-left: 25px;
-  margin-top: 15px;
+  /* margin-top: 15px; */
 }
 
 .menu .nav-item .subMenu {
@@ -8632,8 +8670,8 @@ body {
 }
 
 .menu > li {
-  margin-bottom: 10px;
- border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  /* margin-bottom: 10px; */
+ /* border-bottom: 1px solid rgba(255, 255, 255, 0.2); */
 }
 
 

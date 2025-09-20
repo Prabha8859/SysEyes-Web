@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 
 // Your existing imports
 import img1 from '../../assets/images/member/01.jpg';
-import img2 from '../../assets/images/member/01.jpg';
-import img3 from '../../assets/images/member/01.jpg';
-import img4 from '../../assets/images/member/01.jpg';
-import img5 from '../../assets/images/member/01.jpg';
-import img6 from '../../assets/images/member/01.jpg';
+import img2 from '../../assets/images/member/02.jpg';
+import img3 from '../../assets/images/member/03.jpg';
+import img4 from '../../assets/images/member/04.jpg';
+import img5 from '../../assets/images/member/05.jpg';
+import img6 from '../../assets/images/member/06.jpg';
 import def from '../../assets/images/profile/Women-Avtar.jpg';
 
 const dummyMembers = [
@@ -275,24 +275,30 @@ const MemberSection = () => {
           color: #666;
           margin: 0 0 15px;
         }
-        
         .member-status {
-          font-size: 12px;
-          font-weight: 600;
-          padding: 6px 12px;
-          border-radius: 20px;
-          background: linear-gradient(135deg, #4ade80, #22c55e);
-          color: white;
-          display: inline-block;
-          text-transform: uppercase;
-          letter-spacing: 0.5px;
-          margin-top: auto;
-        }
-        
-        .member-status.offline {
-          background: linear-gradient(135deg, #94a3b8, #64748b);
-        }
-        
+  font-size: 10px;
+  font-weight: 600;
+  width: fit-content;
+  padding: 6px 12px;
+  border-radius: 10px;
+  background-color: #ff69b4; /* 💖 Light pink (online) */
+  color: white;
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: auto;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 2px 6px rgba(255, 105, 180, 0.3); /* soft glow */
+}
+
+.member-status.offline {
+background-color: #ff69b4; /* 💖 Light pink (online) */
+  color: #fff;
+}
+
+
+
         @media (max-width: 768px) {
           .member-image {
             height: 180px;
@@ -316,6 +322,21 @@ const MemberSection = () => {
             padding: 20px 15px;
           }
         }
+
+ @keyframes pulseEffect {
+      0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7);
+      }
+      70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 8px rgba(74, 222, 128, 0);
+      }
+      100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(74, 222, 128, 0);
+      }
+    }
       `}</style>
       
       <section className="member-section padding-tb">
@@ -344,16 +365,29 @@ const MemberSection = () => {
                                 }}
                               />
                             </Link>
-                            <div className={`online-indicator ${member.online ? '' : 'offline'}`}></div>
+                            {/* <div className={`online-indicator ${member.online ? '' : 'offline'}`}></div> */}
                           </div>
                           <div className="member-content">
                             <div>
-                              <h6 className="member-name">
-                                <Link to={isLogin ? "/profile" : "/login"}>
-                                  {member.name}
-                                </Link>
-                              </h6>
+                             <h6 className="member-name" style={{ display: "flex", alignItems: "center", gap: "6px", justifyContent: "center" }}>
+  <Link to={isLogin ? "/profile" : "/login"} style={{ color: "#210053", textDecoration: "none" }}>
+    {member.name}
+  </Link>
+  <span
+    style={{
+      width: "10px",
+      height: "10px",
+      borderRadius: "50%",
+      backgroundColor: member.online ? "#4ade80" : "#94a3b8",
+      display: "inline-block",
+      boxShadow: member.online ? "0 0 0 0 rgba(74, 222, 128, 0.7)" : "none",
+      animation: member.online ? "pulseEffect 1.5s infinite" : "none"
+    }}
+  ></span>
+</h6>
+
                               <p className="member-age">{member.age}</p>
+                             
                             </div>
                             <span className={`member-status ${member.online ? '' : 'offline'}`}>
                               {member.online ? 'Active Now' : 'Offline'}
