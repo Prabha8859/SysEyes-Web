@@ -2,7 +2,7 @@ import React from 'react';
 import img1 from '../../assets/images/app/apple.png';
 import img2 from '../../assets/images/app/mobile-view.png';
 import img3 from '../../assets/images/app/playstore.png';
-import img4 from '../../assets/images/app/shape.png';
+// import img4 from '../../assets/images/app/shape.png';
 
 const AppSection = () => {
   return (

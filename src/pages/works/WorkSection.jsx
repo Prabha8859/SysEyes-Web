@@ -28,10 +28,16 @@ const WorkSection = () => {
   return (
     <section className="work-section padding-tb">
       <div className="container">
-        <div className="section-header">
+        {/* Section Heading */}
+        <div className="section-header text-center">
           <h4 className="theme-color">How SHY-EYES Works?</h4>
           <h2>You're Just 3 Simple Steps Away From Finding Love ❤️</h2>
+          <p className="subtitle">
+            Start your journey with us – it’s quick, easy, and secure!
+          </p>
         </div>
+
+        {/* Steps Section */}
         <div className="section-wrapper">
           <div className="row justify-content-center g-5">
             {steps.map(step => (
@@ -40,7 +46,7 @@ const WorkSection = () => {
                   <div className="lab-inner text-center">
                     <div className="lab-thumb">
                       <div className="thumb-inner">
-                        <img src={step.icon} alt="work-img" />
+                        <img src={step.icon} alt={`Step ${step.id}`} />
                         <div className="step">
                           <span>Step</span>
                           <p>{step.id}</p>

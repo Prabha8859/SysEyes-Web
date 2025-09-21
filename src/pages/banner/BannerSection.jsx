@@ -1,40 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import img01 from '../../assets/images/banner/01.png'
-import img02 from '../../assets/images/banner/google.png'
+// import img02 from '../../assets/images/banner/google.png'
 
 const BannerSection = () => {
-  // State for form data
-  const [formData, setFormData] = useState({
-    gender: '',
-    lookingFor: '',
-    ageFrom: '18',
-    ageTo: '18+',
-    city: ''
-  });
+  // Typewriter effect state
+  const [currentText, setCurrentText] = useState('');
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+  
+  const texts = [
+    "Find Your Perfect Match",
+    "Connect with Like-minded People",
+    "Start Your Love Story Today",
+    "Discover Meaningful Relationships",
+    "Meet Your Soulmate Here"
+  ];
 
-  // Handle form input changes
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
-  };
+  // Typewriter effect
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      const currentFullText = texts[currentIndex];
+      
+      if (isDeleting) {
+        setCurrentText(prev => prev.substring(0, prev.length - 1));
+        
+        if (currentText === '') {
+          setIsDeleting(false);
+          setCurrentIndex((prev) => (prev + 1) % texts.length);
+        }
+      } else {
+        setCurrentText(currentFullText.substring(0, currentText.length + 1));
+        
+        if (currentText === currentFullText) {
+          setTimeout(() => setIsDeleting(true), 2000);
+        }
+      }
+    }, isDeleting ? 50 : 100);
 
-  // Handle form submission
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Form Data:', formData);
-    // Add your form submission logic here
-    alert('Find Your Partner button clicked!');
-  };
+    return () => clearTimeout(timeout);
+  }, [currentText, isDeleting, currentIndex, texts]);
 
-  // Handle social login
-  // const handleSocialLogin = (provider) => {
-  //   console.log(`Login with ${provider}`);
-  //   alert(`Login with ${provider} clicked!`);
-  // };
   return (
     <section className="banner-section">
       <div className="container">
@@ -42,135 +48,55 @@ const BannerSection = () => {
           <div className="row align-items-end">
             <div className="col-lg-6">
               <div className="banner-content">
-                <div className="intro-form">
-                  <div className="intro-form-inner">
-                    <h3>Welcome to SHY-EYES</h3>
-                    <p>Real Connections Start with <strong>SHY-EYES</strong> – </p>
-                     <form className="banner-form" onSubmit={handleSubmit}>
-                    {/* I am a field */}
-                    <div className="form-row gender">
-                      <div className="left">I am a</div>
-                      <div className="right">
-                        <select 
-                          name="gender"
-                          value={formData.gender}
-                          onChange={handleInputChange}
-                          required
-                        >
-                          <option value="">Select Gender</option>
-                          <option value="male">Male</option>
-                          <option value="female">Female</option>
-                          <option value="other">Other</option>
-                        </select>
+                <div className="intro-content-box">
+                  <div className="intro-content-inner">
+                    <div className="main-heading">
+                      <h1>Welcome to <span className="brand-name">SHY-EYES</span></h1>
+                      <div className="typewriter-container">
+                        <h2 className="typewriter-text">
+                          {currentText}
+                          <span className="cursor">|</span>
+                        </h2>
                       </div>
                     </div>
-
-                    {/* Looking for field */}
-                    <div className="form-row person">
-                      <div className="left">Looking for</div>
-                      <div className="right">
-                        <select 
-                          name="lookingFor"
-                          value={formData.lookingFor}
-                          onChange={handleInputChange}
-                          required
-                        >
-                          <option value="">Select Gender</option>
-                          <option value="male">Male</option>
-                          <option value="female">Female</option>
-                          <option value="other">Other</option>
-                        </select>
-                      </div>
-                    </div>
-
-                    {/* Age field */}
-                    <div className="form-row age">
-                      <div className="left">Age</div>
-                      <div className="right">
-                        <div className="custom-select">
-                          <select 
-                            name="ageFrom"
-                            value={formData.ageFrom}
-                            onChange={handleInputChange}
-                          >
-                            <option value="18">18</option>
-                            <option value="19">19</option>
-                            <option value="20">20</option>
-                            <option value="21">21</option>
-                            <option value="22">22</option>
-                            <option value="23">23</option>
-                            <option value="24">24</option>
-                            <option value="25">25</option>
-                            <option value="26">26</option>
-                            <option value="27">27</option>
-                            <option value="28">28</option>
-                            <option value="29">29</option>
-                            <option value="30">30</option>
-                            <option value="35">35</option>
-                            <option value="40">40</option>
-                            <option value="45">45</option>
-                            <option value="50">50</option>
-                          </select>
+                    
+                    <div className="content-description">
+                      <p className="intro-text">
+                        Where real connections begin and lasting relationships flourish. 
+                        Join thousands of singles who have found their perfect match through our platform.
+                      </p>
+                      
+                      <div className="features-list">
+                        <div className="feature-item">
+                          <span className="feature-highlight">✓</span>
+                          <span>Verified Dating Profiles</span>
                         </div>
-                        <div className="custom-select">
-                          <select 
-                            name="ageTo"
-                            value={formData.ageTo}
-                            onChange={handleInputChange}
-                          >
-                            <option value="18+">18+</option>
-                            <option value="20+">20+</option>
-                            <option value="25+">25+</option>
-                            <option value="30+">30+</option>
-                            <option value="35+">35+</option>
-                            <option value="40+">40+</option>
-                            <option value="45+">45+</option>
-                            <option value="50+">50+</option>
-                            <option value="55+">55+</option>
-                            <option value="60+">60+</option>
-                          </select>
+                        <div className="feature-item">
+                          <span className="feature-highlight">✓</span>
+                          <span>Privacy Protected</span>
+                        </div>
+                        <div className="feature-item">
+                          <span className="feature-highlight">✓</span>
+                          <span>Advanced Compatibility</span>
+                        </div>
+                        <div className="feature-item">
+                          <span className="feature-highlight">✓</span>
+                          <span>Real-time Messaging</span>
                         </div>
                       </div>
                     </div>
-
-                    {/* City field */}
-                    <div className="form-row city city-row">
-                      <div className="left">City</div>
-                      <div className="right">
-                        <input 
-                          type="text"
-                          name="city"
-                          value={formData.city}
-                          onChange={handleInputChange}
-                          placeholder="Your City Name.."
-                          required
-                        />
-                      </div>
+                    
+                    <div className="cta-section">
+                      <button className="primary-cta">
+                        <span className="btn-text">Start Your Journey</span>
+                        <span className="btn-icon">→</span>
+                      </button>
+                      <p className="cta-subtitle">Join over 10,000+ happy couples</p>
                     </div>
-
-                    {/* Submit Button */}
-                    <button type="submit">
-                      Find Your Partner
-                    </button>
-                    </form>
-                    <ul className="social-list">
-                      <li className="google">
-                        <a href="/">
-                          <img src={img02} alt="Google" />
-                          <span>Continue with Google</span>
-                        </a>
-                      </li>
-                      <li className="facebook">
-                        <a href="#">
-                          <i className="icofont-facebook"></i>
-                        </a>
-                      </li>
-                      <li className="twitter">
-                        <a href="#">
-                          <i className="icofont-twitter"></i>
-                        </a>
-                      </li>
-                    </ul>
+                    
+                    <div className="bottom-section">
+                      <p className="trust-text">Trusted by thousands • Secure platform • Real connections</p>
+                    </div>
                   </div>
                 </div>
               </div>

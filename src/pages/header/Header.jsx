@@ -45,6 +45,21 @@ const Header = () => {
   const [openSubmenu, setOpenSubmenu] = useState(null); // For submenu toggle
   const userData = user?.data || user || null;
 
+  useEffect(() => {
+  const handleScroll = () => {
+    const header = document.querySelector('.header-section');
+    if (window.scrollY > 50) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  };
+
+  window.addEventListener('scroll', handleScroll);
+  return () => window.removeEventListener('scroll', handleScroll);
+}, []);
+
+
   // ✅ Fetch profile
   useEffect(() => {
     const fetchProfile = async () => {
@@ -132,14 +147,15 @@ const Header = () => {
                     ) : (
                       <>
                         {/* Submenu toggle (works for both desktop and mobile) */}
-                        <span
+                       <span
                           role="button"
-                          className="subMenu-toggle"
+                          className={`subMenu-toggle ${openSubmenu === index ? "open" : ""}`}
                           onClick={() => toggleSubmenu(index)}
                         >
                           {item.label}
-                          {/* <span className="arrow">{openSubmenu === index ? "▲" : "▼"}</span> */}
+                          <span className="arrow">▼</span> {/* Arrow added here */}
                         </span>
+
                         {/* Submenu */}
                         <ul className={`subMenu${openSubmenu === index ? " active" : ""}`}>
                           {item.subMenu?.map((sub, subIndex) => (

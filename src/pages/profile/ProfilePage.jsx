@@ -1,49 +1,45 @@
-import React, { useEffect, useState, useMemo, useCallback, useRef } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Heart, MessageCircle, Share2, UserPlus, Camera, Edit3, X, Facebook, Instagram, Send } from 'lucide-react';
-import c1 from '../../assets/images/profile/dp.png';
-import c2 from '../../assets/images/profile/cover.jpg';
-import g1 from '../../assets/images/group/01.jpg';
-import g2 from '../../assets/images/group/02.jpg';
-import g3 from '../../assets/images/group/03.jpg';
-import g4 from '../../assets/images/group/04.jpg';
-import g5 from '../../assets/images/group/05.jpg';
-import m1 from '../../assets/images/member/01.jpg';
-import m2 from '../../assets/images/member/02.jpg';
-import m3 from '../../assets/images/member/03.jpg';
-import m4 from '../../assets/images/member/04.jpg';
-import m5 from '../../assets/images/member/05.jpg';
-import m6 from '../../assets/images/member/06.jpg';
-import m7 from '../../assets/images/member/07.jpg';
-import m8 from '../../assets/images/member/08.jpg';
-import m9 from '../../assets/images/member/09.jpg';
-import m10 from '../../assets/images/member/10.jpg';
-import m11 from '../../assets/images/member/11.jpg';
-import m12 from '../../assets/images/member/12.jpg';
-import w1 from '../../assets/images/widget/01.jpg';
-import w2 from '../../assets/images/widget/02.jpg';
-import w3 from '../../assets/images/widget/03.jpg';
-import w4 from '../../assets/images/widget/04.jpg';
-import w5 from '../../assets/images/widget/05.jpg';
-import w6 from '../../assets/images/widget/06.jpg';
-import w7 from '../../assets/images/widget/07.jpg';
-import w8 from '../../assets/images/widget/08.jpg';
-import w9 from '../../assets/images/widget/09.jpg';
-import gm1 from '../../assets/images/group/group-mem/01.png';
-import gm2 from '../../assets/images/group/group-mem/02.png';
-import gm3 from '../../assets/images/group/group-mem/03.png';
-import gm4 from '../../assets/images/group/group-mem/04.png';
-import gm5 from '../../assets/images/group/group-mem/05.png';
-import gm6 from '../../assets/images/group/group-mem/06.png';
-import defaultAvatar from "../../assets/images/profile/Men-Avtar.jpg";
-import { getFullImageUrl } from '../../assets/utils/getFullImageUrl';
+import React, { useState, useRef, useMemo } from 'react';
 import './ProfilePage.css';
+import { 
+  Camera, UserPlus, MessageCircle, X, Heart, Share2, Send, 
+  Facebook, Instagram, Upload, FileText, Image, Paperclip
+} from 'lucide-react';
 
-// Constants
-const IMG_BASE_URL = "https://chat.bitmaxtest.com/admin/public/uploads/";
-const BASE_URL = "https://chat.bitmaxtest.com/admin/api";
-const TOKEN = "getToken";
+import defaultimge from '../../assets/images/blog/01.jpg';
+import defaultPhoto from '../../assets/images/footer/02.jpg';
 
+// Mock data and images
+const defaultAvatar = defaultPhoto;
+const defaultCover = defaultimge;
+
+const mockFriends = [
+  { id: 1, name: "Jennifer Guido", image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face", active: "1 Day" },
+  { id: 2, name: "Andrea Guido", image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face", active: "2 Day" },
+  { id: 3, name: "Anna Hawk", image: "https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=150&h=150&fit=crop&crop=face", active: "5 Day" },
+  { id: 4, name: "Andreas Adam", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face", active: "4 Day" },
+  { id: 5, name: "Alaina T", image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&h=150&fit=crop&crop=face", active: "1 Day" },
+  { id: 6, name: "Aron Smith", image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face", active: "3 Day" },
+];
+
+const mockPhotos = [
+  "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=300&fit=crop",
+  "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=300&h=300&fit=crop",
+  "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=300&h=300&fit=crop",
+  "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=300&h=300&fit=crop",
+  "https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=300&h=300&fit=crop",
+  "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=300&h=300&fit=crop",
+];
+
+const mockGroupMembers = [
+  "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=50&h=50&fit=crop&crop=face",
+  "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=50&h=50&fit=crop&crop=face",
+  "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=50&h=50&fit=crop&crop=face",
+  "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=50&h=50&fit=crop&crop=face",
+  "https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=50&h=50&fit=crop&crop=face",
+  "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=50&h=50&fit=crop&crop=face",
+];
+
+// Profile Header Component
 const ProfileHeader = ({ userData, onAddFriend, onPrivateMessage, onProfileImageChange, onCoverImageChange, profileImage, coverImage }) => {
   const profileFileInputRef = useRef(null);
   const coverFileInputRef = useRef(null);
@@ -91,20 +87,20 @@ const ProfileHeader = ({ userData, onAddFriend, onPrivateMessage, onProfileImage
             </div>
             
             <div className="profile-text-info">
-              <h1 className="profile-name">{userData?.f_name || userData?.email}</h1>
-              <p className="profile-status">Active 02 Minutes Ago</p>
+              <h1 className="profile-name">{userData?.f_name || userData?.name || 'William Smith'}</h1>
+              <p className="profile-status">Active 2 Minutes Ago</p>
             </div>
           </div>
 
           <div className="profile-action-buttons">
             <button onClick={onAddFriend} className="action-btn add-friend-btn">
               <UserPlus size={18} />
-              <span>Add Friends</span>
+              <span>Add Friend</span>
             </button>
             
             <button onClick={onPrivateMessage} className="action-btn private-msg-btn">
               <MessageCircle size={18} />
-              <span>Private Message</span>
+              <span>Message</span>
             </button>
           </div>
         </div>
@@ -114,15 +110,11 @@ const ProfileHeader = ({ userData, onAddFriend, onPrivateMessage, onProfileImage
 };
 
 // Add Friends Popup Component
-const AddFriendsPopup = ({ isOpen, onClose, userData }) => {
-  const suggestedFriends = [
-    { id: 1, name: "Jennifer Guido", image: m1, mutualFriends: "5 mutual friends" },
-    { id: 2, name: "Andrea Guido", image: m2, mutualFriends: "3 mutual friends" },
-    { id: 3, name: "Anna Hawk", image: m3, mutualFriends: "8 mutual friends" },
-    { id: 4, name: "Andreas Adam", image: m4, mutualFriends: "2 mutual friends" },
-    { id: 5, name: "Alaina T", image: m5, mutualFriends: "6 mutual friends" },
-    { id: 6, name: "Aron Smith", image: m6, mutualFriends: "4 mutual friends" },
-  ];
+const AddFriendsPopup = ({ isOpen, onClose }) => {
+  const suggestedFriends = mockFriends.slice(0, 6).map(friend => ({
+    ...friend,
+    mutualFriends: `${Math.floor(Math.random() * 10) + 1} mutual friends`
+  }));
 
   if (!isOpen) return null;
 
@@ -200,9 +192,9 @@ const ChatBox = ({ isOpen, onClose, userData }) => {
     <div className="chat-box">
       <div className="chat-header">
         <div className="chat-user-info">
-          <img src={getFullImageUrl(userData?.image_url, c1)} alt="Profile" className="chat-avatar" />
+          <img src={userData?.image || defaultAvatar} alt="Profile" className="chat-avatar" />
           <div>
-            <h4 className="chat-username">{userData?.f_name || 'William Smith'}</h4>
+            <h4 className="chat-username">{userData?.name || 'William Smith'}</h4>
             <p className="chat-status">Online</p>
           </div>
         </div>
@@ -243,161 +235,159 @@ const ChatBox = ({ isOpen, onClose, userData }) => {
   );
 };
 
+// Activity Tab Component
 const ActivityTab = ({ userData }) => {
   const [activeSubTab, setActiveSubTab] = useState('personal');
   const [filterOption, setFilterOption] = useState('Everything');
+  const [postText, setPostText] = useState('');
+  const [posts, setPosts] = useState([
+    {
+      id: 1,
+      text: "Just finished an amazing project with the team! Feeling grateful for all the hard work and collaboration that made this possible. Excited to share the results soon! 🚀",
+      author: userData?.name || 'William Smith',
+      avatar: userData?.image || defaultAvatar,
+      time: "6 Minutes Ago",
+      likes: 306,
+      comments: 136,
+      images: []
+    },
+    {
+      id: 2,
+      text: "Beautiful sunset from my evening walk! Sometimes the simple moments are the most rewarding. Nature never fails to inspire creativity and peace of mind.",
+      author: userData?.name || 'William Smith',
+      avatar: userData?.image || defaultAvatar,
+      time: "2 Hours Ago",
+      likes: 178,
+      comments: 89,
+      images: [
+        "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=400&h=300&fit=crop",
+        "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=400&h=300&fit=crop"
+      ]
+    }
+  ]);
+  const [filteredPosts, setFilteredPosts] = useState(posts);
 
-  // Mock filtering logic (since content is static, just set state)
+  const fileInputRef = useRef(null);
+  const photoInputRef = useRef(null);
+
   const handleFilterChange = (e) => {
-    setFilterOption(e.target.value);
-    // Here you can add logic to filter content based on 'Recently', 'Everything', 'Popular', 'Relevant'
-    console.log('Selected filter:', e.target.value);
+    const value = e.target.value;
+    setFilterOption(value);
+    
+    let filtered = [...posts];
+    switch (value) {
+      case 'Recently':
+        filtered = posts.filter(post => post.time.includes('Minutes') || post.time.includes('Hour'));
+        break;
+      case 'Popular':
+        filtered = posts.filter(post => post.likes > 200);
+        break;
+      case 'Relevant':
+        filtered = posts.filter(post => post.author === userData?.name);
+        break;
+      default:
+        filtered = posts;
+    }
+    setFilteredPosts(filtered);
+  };
+
+  const handlePostSubmit = () => {
+    if (postText.trim()) {
+      const newPost = {
+        id: posts.length + 1,
+        text: postText,
+        author: userData?.name || 'William Smith',
+        avatar: userData?.image || defaultAvatar,
+        time: "Just now",
+        likes: 0,
+        comments: 0,
+        images: []
+      };
+      
+      const updatedPosts = [newPost, ...posts];
+      setPosts(updatedPosts);
+      setFilteredPosts(updatedPosts);
+      setPostText('');
+    }
+  };
+
+  const handleFileUpload = (type) => {
+    if (type === 'photo') {
+      photoInputRef.current?.click();
+    } else if (type === 'file') {
+      fileInputRef.current?.click();
+    }
   };
 
   const renderPersonalContent = () => (
     <div className="activity-posts">
-      {/* Post 1 */}
-      <div className="activity-post">
-        <div className="post-header">
-          <img src={getFullImageUrl(userData?.image_url, c1)} alt="Profile" className="post-user-avatar" />
-          <div className="post-user-info">
-            <h4 className="post-username">{userData?.f_name || 'William Smith'}</h4>
-            <div className="post-meta">
-              <span className="post-privacy">Public</span>
-              <span className="post-time">6 Minutes Ago</span>
+      {filteredPosts.map(post => (
+        <div key={post.id} className="activity-post">
+          <div className="post-header">
+            <img src={post.avatar} alt="Profile" className="post-user-avatar" />
+            <div className="post-user-info">
+              <h4 className="post-username">{post.author}</h4>
+              <div className="post-meta">
+                <span className="post-privacy">Public</span>
+                <span className="post-time">{post.time}</span>
+              </div>
             </div>
           </div>
-        </div>
-        
-        <div className="post-content">
-          <p>Quickly deliver going forward methods info create empowerment before client-centered bandwidth Credibly pontificate interoperable leadership skills ands B2B data awesome Continually whiteboard ands B2B data awesome Continually whiteboard</p>
-        </div>
-
-        <div className="post-engagement">
-          <div className="post-stats">
-            <div className="post-likes">
-              <span className="like-reactions">👍 ❤️ 😍</span>
-              <span className="like-text">Julia, Petrova and 306 like this</span>
-            </div>
-            <span className="post-comments-count">136 Comments</span>
-          </div>
-
-          <div className="post-actions">
-            <button className="post-action-btn">
-              <Heart size={18} />
-              <span>Like</span>
-            </button>
-            <button className="post-action-btn">
-              <MessageCircle size={18} />
-              <span>Comment</span>
-            </button>
-            <button className="post-action-btn">
-              <Share2 size={18} />
-              <span>Share</span>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Post 2 - With Images */}
-      <div className="activity-post">
-        <div className="post-header">
-          <img src={getFullImageUrl(userData?.image_url, c1)} alt="Profile" className="post-user-avatar" />
-          <div className="post-user-info">
-            <h4 className="post-username">{userData?.f_name || 'William Smith'}</h4>
-            <div className="post-meta">
-              <span className="post-privacy">Public</span>
-              <span className="post-time">6 Minutes Ago</span>
-            </div>
-          </div>
-        </div>
-        
-        <div className="post-content">
-          <p>Quickly deliver going forward methods info create empowerment before client-centered bandwidth Credibly pontificate interoperable leadership skills ands B2B data awesome Continually whiteboard ands B2B data awesome Continually whiteboard</p>
           
-          <div className="post-images">
-            <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=400&h=300&fit=crop" alt="Post" className="post-image" />
-            <img src="https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=400&h=300&fit=crop" alt="Post" className="post-image" />
+          <div className="post-content">
+            <p>{post.text}</p>
+            
+            {post.images.length > 0 && (
+              <div className={post.images.length > 1 ? "post-images" : "post-single-image"}>
+                {post.images.map((img, idx) => (
+                  <img 
+                    key={idx} 
+                    src={img} 
+                    alt="Post" 
+                    className={post.images.length > 1 ? "post-image" : "single-post-image"} 
+                  />
+                ))}
+              </div>
+            )}
           </div>
-        </div>
 
-        <div className="post-engagement">
-          <div className="post-stats">
-            <div className="post-likes">
-              <span className="like-reactions">👍 ❤️ 😍</span>
-              <span className="like-text">Julia, Petrova and 306 like this</span>
+          <div className="post-engagement">
+            <div className="post-stats">
+              <div className="post-likes">
+                <span className="like-reactions">👍 ❤️ 😍</span>
+                <span className="like-text">You and {post.likes} others like this</span>
+              </div>
+              <span className="post-comments-count">{post.comments} Comments</span>
             </div>
-            <span className="post-comments-count">136 Comments</span>
-          </div>
 
-          <div className="post-actions">
-            <button className="post-action-btn">
-              <Heart size={18} />
-              <span>Like</span>
-            </button>
-            <button className="post-action-btn">
-              <MessageCircle size={18} />
-              <span>Comment</span>
-            </button>
-            <button className="post-action-btn">
-              <Share2 size={18} />
-              <span>Share</span>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Post 3 - Single Image */}
-      <div className="activity-post">
-        <div className="post-header">
-          <img src={getFullImageUrl(userData?.image_url, c1)} alt="Profile" className="post-user-avatar" />
-          <div className="post-user-info">
-            <h4 className="post-username">{userData?.f_name || 'William Smith'}</h4>
-            <div className="post-meta">
-              <span className="post-privacy">Public</span>
-              <span className="post-time">6 Minutes Ago</span>
+            <div className="post-actions">
+              <button className="post-action-btn">
+                <Heart size={18} />
+                <span>Like</span>
+              </button>
+              <button className="post-action-btn">
+                <MessageCircle size={18} />
+                <span>Comment</span>
+              </button>
+              <button className="post-action-btn">
+                <Share2 size={18} />
+                <span>Share</span>
+              </button>
             </div>
           </div>
         </div>
-        
-        <div className="post-content">
-          <p>Quickly deliver going forward methods info create empowerment before client-centered bandwidth Credibly pontificate interoperable leadership skills ands B2B data awesome Continually whiteboard ands B2B data awesome Continually whiteboard</p>
-          
-          <div className="post-single-image">
-            <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=600&h=400&fit=crop" alt="Post" className="single-post-image" />
-          </div>
-        </div>
+      ))}
 
-        <div className="post-engagement">
-          <div className="post-stats">
-            <div className="post-likes">
-              <span className="like-reactions">👍 ❤️ 😍</span>
-              <span className="like-text">Julia, Petrova and 306 like this</span>
-            </div>
-            <span className="post-comments-count">136 Comments</span>
-          </div>
-
-          <div className="post-actions">
-            <button className="post-action-btn">
-              <Heart size={18} />
-              <span>Like</span>
-            </button>
-            <button className="post-action-btn">
-              <MessageCircle size={18} />
-              <span>Comment</span>
-            </button>
-            <button className="post-action-btn">
-              <Share2 size={18} />
-              <span>Share</span>
-            </button>
-          </div>
+      {filteredPosts.length === 0 && (
+        <div className="no-posts">
+          <p>No posts found for the selected filter.</p>
         </div>
-      </div>
+      )}
 
       {/* Load More Button */}
       <div className="load-more-container">
         <button className="load-more-btn">
-          Load More Post
+          Load More Posts
         </button>
       </div>
     </div>
@@ -405,9 +395,9 @@ const ActivityTab = ({ userData }) => {
 
   const renderMentionsContent = () => (
     <div className="mentions-content">
-      <div className="mentions-post">
+      <div className="activity-post">
         <div className="post-header">
-          <img src={m2} alt="Profile" className="post-user-avatar" />
+          <img src={mockFriends[1].image} alt="Profile" className="post-user-avatar" />
           <div className="post-user-info">
             <h4 className="post-username">Andrea Guido</h4>
             <div className="post-meta">
@@ -418,7 +408,7 @@ const ActivityTab = ({ userData }) => {
         </div>
         
         <div className="post-content">
-          <p>Had a great time with <span className="mention">@{userData?.f_name || 'William Smith'}</span> at the conference today! Looking forward to collaborating on future projects.</p>
+          <p>Had a great time with <span className="mention">@{userData?.name || 'William Smith'}</span> at the conference today! Looking forward to collaborating on future projects.</p>
         </div>
 
         <div className="post-engagement">
@@ -446,58 +436,16 @@ const ActivityTab = ({ userData }) => {
           </div>
         </div>
       </div>
-
-      <div className="mentions-post">
-        <div className="post-header">
-          <img src={m4} alt="Profile" className="post-user-avatar" />
-          <div className="post-user-info">
-            <h4 className="post-username">Andreas Adam</h4>
-            <div className="post-meta">
-              <span className="post-privacy">Public</span>
-              <span className="post-time">3 Hours Ago</span>
-            </div>
-          </div>
-        </div>
-        
-        <div className="post-content">
-          <p>Thanks to <span className="mention">@{userData?.f_name || 'William Smith'}</span> for the amazing advice on project management. Really appreciate your insights!</p>
-        </div>
-
-        <div className="post-engagement">
-          <div className="post-stats">
-            <div className="post-likes">
-              <span className="like-reactions">👍 ❤️ 😊</span>
-              <span className="like-text">You and 23 others like this</span>
-            </div>
-            <span className="post-comments-count">8 Comments</span>
-          </div>
-
-          <div className="post-actions">
-            <button className="post-action-btn">
-              <Heart size={18} />
-              <span>Like</span>
-            </button>
-            <button className="post-action-btn">
-              <MessageCircle size={18} />
-              <span>Comment</span>
-            </button>
-            <button className="post-action-btn">
-              <Share2 size={18} />
-              <span>Share</span>
-            </button>
-          </div>
-        </div>
-      </div>
     </div>
   );
 
   const renderFavoritesContent = () => (
     <div className="favorites-content">
-      <div className="favorites-post">
+      <div className="activity-post favorited">
         <div className="post-header">
-          <img src={getFullImageUrl(userData?.image_url, c1)} alt="Profile" className="post-user-avatar" />
+          <img src={userData?.image || defaultAvatar} alt="Profile" className="post-user-avatar" />
           <div className="post-user-info">
-            <h4 className="post-username">{userData?.f_name || 'William Smith'}</h4>
+            <h4 className="post-username">{userData?.name || 'William Smith'}</h4>
             <div className="post-meta">
               <span className="post-privacy">Public</span>
               <span className="post-time">2 Days Ago</span>
@@ -510,11 +458,10 @@ const ActivityTab = ({ userData }) => {
         </div>
         
         <div className="post-content">
-          <p>This is one of my favorite posts! Sharing some beautiful moments from my recent trip to the mountains. The sunset was absolutely breathtaking!</p>
+          <p>This is one of my favorite memories! Sharing some beautiful moments from my recent trip to the mountains. The sunset was absolutely breathtaking and reminded me why I love traveling.</p>
           
-          <div className="post-images">
-            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop" alt="Mountain sunset" className="post-image" />
-            <img src="https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=400&h=300&fit=crop" alt="Mountain view" className="post-image" />
+          <div className="post-single-image">
+            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=400&fit=crop" alt="Mountain sunset" className="single-post-image" />
           </div>
         </div>
 
@@ -525,102 +472,6 @@ const ActivityTab = ({ userData }) => {
               <span className="like-text">Sarah, Mike and 152 others like this</span>
             </div>
             <span className="post-comments-count">89 Comments</span>
-          </div>
-
-          <div className="post-actions">
-            <button className="post-action-btn favorited">
-              <Heart size={18} />
-              <span>Like</span>
-            </button>
-            <button className="post-action-btn">
-              <MessageCircle size={18} />
-              <span>Comment</span>
-            </button>
-            <button className="post-action-btn">
-              <Share2 size={18} />
-              <span>Share</span>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div className="favorites-post">
-        <div className="post-header">
-          <img src={getFullImageUrl(userData?.image_url, c1)} alt="Profile" className="post-user-avatar" />
-          <div className="post-user-info">
-            <h4 className="post-username">{userData?.f_name || 'William Smith'}</h4>
-            <div className="post-meta">
-              <span className="post-privacy">Public</span>
-              <span className="post-time">1 Week Ago</span>
-            </div>
-          </div>
-          <div className="favorite-badge">
-            <Heart size={16} className="favorite-icon" />
-            <span>Favorite</span>
-          </div>
-        </div>
-        
-        <div className="post-content">
-          <p>Another favorite memory! Celebrating success with the team after completing our biggest project this year. Couldn't be more proud of everyone involved!</p>
-          
-          <div className="post-single-image">
-            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&h=400&fit=crop" alt="Team celebration" className="single-post-image" />
-          </div>
-        </div>
-
-        <div className="post-engagement">
-          <div className="post-stats">
-            <div className="post-likes">
-              <span className="like-reactions">👍 ❤️ 🎉 👏</span>
-              <span className="like-text">Team members and 98 others like this</span>
-            </div>
-            <span className="post-comments-count">45 Comments</span>
-          </div>
-
-          <div className="post-actions">
-            <button className="post-action-btn favorited">
-              <Heart size={18} />
-              <span>Like</span>
-            </button>
-            <button className="post-action-btn">
-              <MessageCircle size={18} />
-              <span>Comment</span>
-            </button>
-            <button className="post-action-btn">
-              <Share2 size={18} />
-              <span>Share</span>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div className="favorites-post">
-        <div className="post-header">
-          <img src={getFullImageUrl(userData?.image_url, c1)} alt="Profile" className="post-user-avatar" />
-          <div className="post-user-info">
-            <h4 className="post-username">{userData?.f_name || 'William Smith'}</h4>
-            <div className="post-meta">
-              <span className="post-privacy">Public</span>
-              <span className="post-time">2 Weeks Ago</span>
-            </div>
-          </div>
-          <div className="favorite-badge">
-            <Heart size={16} className="favorite-icon" />
-            <span>Favorite</span>
-          </div>
-        </div>
-        
-        <div className="post-content">
-          <p>One of my all-time favorite quotes: "Success is not final, failure is not fatal: it is the courage to continue that counts." - Winston Churchill. This really resonates with my journey!</p>
-        </div>
-
-        <div className="post-engagement">
-          <div className="post-stats">
-            <div className="post-likes">
-              <span className="like-reactions">👍 ❤️ 💪 🌟</span>
-              <span className="like-text">Friends and 67 others like this</span>
-            </div>
-            <span className="post-comments-count">34 Comments</span>
           </div>
 
           <div className="post-actions">
@@ -693,35 +544,53 @@ const ActivityTab = ({ userData }) => {
           {activeSubTab === 'personal' && (
             <div className="post-creation-card">
               <div className="post-creator">
-                <img src={getFullImageUrl(userData?.image_url, c1)} alt="Profile" className="creator-avatar" />
+                <img src={userData?.image || defaultAvatar} alt="Profile" className="creator-avatar" />
                 <div className="creator-content">
                   <div className="privacy-selector">
                     <span className="public-badge">Public</span>
                   </div>
                   <textarea 
-                    placeholder="What's on your mind, William?"
+                    placeholder="What's on your mind?"
                     className="post-textarea"
                     rows="3"
+                    value={postText}
+                    onChange={(e) => setPostText(e.target.value)}
                   />
                   <div className="post-creation-actions">
                     <div className="post-options">
-                      <button className="post-option">
-                        <span>📝</span>
+                      <button className="post-option" onClick={() => handleFileUpload('text')}>
+                        <FileText size={16} />
                         <span>Text</span>
                       </button>
-                      <button className="post-option">
-                        <Camera size={16} />
-                        <span>Photo/Videos</span>
+                      <button className="post-option" onClick={() => handleFileUpload('photo')}>
+                        <Image size={16} />
+                        <span>Photo</span>
                       </button>
-                      <button className="post-option">
-                        <span>📎</span>
-                        <span>Attach File</span>
+                      <button className="post-option" onClick={() => handleFileUpload('file')}>
+                        <Paperclip size={16} />
+                        <span>File</span>
                       </button>
                     </div>
-                    <button className="post-submit-btn">POST</button>
+                    <button className="post-submit-btn" onClick={handlePostSubmit}>POST</button>
                   </div>
                 </div>
               </div>
+              
+              {/* Hidden file inputs */}
+              <input
+                type="file"
+                ref={photoInputRef}
+                style={{ display: 'none' }}
+                accept="image/*"
+                multiple
+                onChange={(e) => console.log('Photos selected:', e.target.files)}
+              />
+              <input
+                type="file"
+                ref={fileInputRef}
+                style={{ display: 'none' }}
+                onChange={(e) => console.log('File selected:', e.target.files[0])}
+              />
             </div>
           )}
 
@@ -740,6 +609,7 @@ const ActivityTab = ({ userData }) => {
   );
 };
 
+// Profile Tab Component
 const ProfileTab = ({ userData }) => {
   return (
     <div className="profile-tab-container">
@@ -748,134 +618,68 @@ const ProfileTab = ({ userData }) => {
           {/* Base Info Card */}
           <div className="profile-info-card">
             <div className="card-header">
-              <h6>Base Info</h6>
+              <h6>Basic Information</h6>
             </div>
             <div className="card-body">
               <div className="info-list">
                 <div className="info-item">
                   <span className="info-label">Name</span>
-                  <span className="info-value">{userData?.f_name || "N/A"}</span>
+                  <span className="info-value">{userData?.name || "William Smith"}</span>
                 </div>
                 <div className="info-item">
-                  <span className="info-label">I'm a</span>
-                  <span className="info-value">{userData?.gender || "Woman"}</span>
-                </div>
-                <div className="info-item">
-                  <span className="info-label">Looking for a</span>
-                  <span className="info-value">{userData?.looking_for || "Men"}</span>
-                </div>
-                <div className="info-item">
-                  <span className="info-label">Marital Status</span>
-                  <span className="info-value">{userData?.marital_status || "Single"}</span>
+                  <span className="info-label">Gender</span>
+                  <span className="info-value">{userData?.gender || "Male"}</span>
                 </div>
                 <div className="info-item">
                   <span className="info-label">Age</span>
-                  <span className="info-value">{userData?.age || "36"}</span>
+                  <span className="info-value">{userData?.age || "28"}</span>
                 </div>
                 <div className="info-item">
-                  <span className="info-label">Date of Birth</span>
-                  <span className="info-value">{userData?.dob || "27-02-1996"}</span>
+                  <span className="info-label">Location</span>
+                  <span className="info-value">{userData?.location || "New York, USA"}</span>
                 </div>
                 <div className="info-item">
-                  <span className="info-label">Address</span>
-                  <span className="info-value">{userData?.location || "Streep Rd, Peosur, Inphodux, USA"}</span>
+                  <span className="info-label">Joined</span>
+                  <span className="info-value">January 2023</span>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Myself Summary Card */}
+          {/* About Me Card */}
           <div className="profile-info-card">
             <div className="card-header">
-              <h6>Myself Summary</h6>
+              <h6>About Me</h6>
             </div>
             <div className="card-body">
               <p className="summary-text">
-                Collaboratively innovate compelling mindshare after prospective partnerships Competently seize long-term high-impact internal or "organic" sources via user friendly strategic themener areas creat Dramatically coordinate premium partnerships rather than standards compliant items Dramatically matrix ethical collaboration and idea-sharing through opensource methodologies and Intrinsicly grow collaborative platforms vis-a-vis effective scenarios. Energistically strategize cost effective ideas before the worke unde.
+                Passionate about technology, travel, and connecting with people from around the world. I love exploring new places, trying different cuisines, and sharing experiences with friends. Always looking for new adventures and opportunities to learn and grow.
               </p>
             </div>
           </div>
 
-          {/* Looking For Card */}
+          {/* Interests Card */}
           <div className="profile-info-card">
             <div className="card-header">
-              <h6>Looking For</h6>
+              <h6>Interests & Hobbies</h6>
             </div>
             <div className="card-body">
               <div className="info-list">
                 <div className="info-item">
-                  <span className="info-label">Things I'm looking for</span>
-                  <span className="info-value">I want a funny person</span>
+                  <span className="info-label">Hobbies</span>
+                  <span className="info-value">Photography, Reading, Hiking</span>
                 </div>
                 <div className="info-item">
-                  <span className="info-label">Whatever I like</span>
-                  <span className="info-value">I like to travel a lot</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Lifestyle Card */}
-          <div className="profile-info-card">
-            <div className="card-header">
-              <h6>Lifestyle</h6>
-            </div>
-            <div className="card-body">
-              <div className="info-list">
-                <div className="info-item">
-                  <span className="info-label">Interest</span>
-                  <span className="info-value">Dogs,Cats</span>
+                  <span className="info-label">Music</span>
+                  <span className="info-value">Jazz, Rock, Electronic</span>
                 </div>
                 <div className="info-item">
-                  <span className="info-label">Favorite vocations spot</span>
-                  <span className="info-value">Maldives, Bangladesh</span>
+                  <span className="info-label">Movies</span>
+                  <span className="info-value">Sci-Fi, Drama, Documentaries</span>
                 </div>
                 <div className="info-item">
-                  <span className="info-label">Looking for</span>
-                  <span className="info-value">Serious Relationship,Affair</span>
-                </div>
-                <div className="info-item">
-                  <span className="info-label">Smoking</span>
-                  <span className="info-value">Casual Smoker</span>
-                </div>
-                <div className="info-item">
-                  <span className="info-label">Language</span>
-                  <span className="info-value">English, French, Italian</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Physical Info Card */}
-          <div className="profile-info-card">
-            <div className="card-header">
-              <h6>Physical info</h6>
-            </div>
-            <div className="card-body">
-              <div className="info-list">
-                <div className="info-item">
-                  <span className="info-label">Height</span>
-                  <span className="info-value">5'9 ft</span>
-                </div>
-                <div className="info-item">
-                  <span className="info-label">Weight</span>
-                  <span className="info-value">72 kg</span>
-                </div>
-                <div className="info-item">
-                  <span className="info-label">Hair Color</span>
-                  <span className="info-value">Black</span>
-                </div>
-                <div className="info-item">
-                  <span className="info-label">Eye Color</span>
-                  <span className="info-value">Brown</span>
-                </div>
-                <div className="info-item">
-                  <span className="info-label">Body Type</span>
-                  <span className="info-value">Tall</span>
-                </div>
-                <div className="info-item">
-                  <span className="info-label">Ethnicity</span>
-                  <span className="info-value">Middle Eastern</span>
+                  <span className="info-label">Languages</span>
+                  <span className="info-value">English, Spanish, French</span>
                 </div>
               </div>
             </div>
@@ -891,6 +695,7 @@ const ProfileTab = ({ userData }) => {
   );
 };
 
+// Friends Tab Component
 const FriendsTab = ({ friends }) => {
   return (
     <div className="friends-tab-container">
@@ -933,11 +738,12 @@ const FriendsTab = ({ friends }) => {
   );
 };
 
+// Photos Tab Component
 const PhotosTab = ({ photos }) => {
   return (
     <div className="photos-tab-container">
       <div className="photos-header">
-        <h2>All Uploaded Pictures</h2>
+        <h2>Photo Gallery</h2>
       </div>
       <div className="photos-grid">
         {photos.map((photo, index) => (
@@ -958,46 +764,44 @@ const SearchWidget = () => {
   return (
     <div className="widget search-widget">
       <div className="widget-header">
-        <h5>Filter Search Member</h5>
+        <h5>Find People</h5>
       </div>
       <div className="widget-content">
-        <p className="widget-description">Serious Dating With TuruLav Your Perfect Match is Just a Click Away.</p>
+        <p className="widget-description">Connect with people who share your interests</p>
         <form className="search-form">
           <select className="form-select">
             <option value="">I am a</option>
             <option value="male">Male</option>
             <option value="female">Female</option>
-            <option value="other">Others</option>
+            <option value="other">Other</option>
           </select>
           <select className="form-select">
             <option value="">Looking for</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="both">Both</option>
+            <option value="friends">Friends</option>
+            <option value="networking">Networking</option>
+            <option value="dating">Dating</option>
           </select>
           <div className="age-inputs">
             <select className="form-select">
-              <option value="">18</option>
-              <option value="19">19</option>
-              <option value="20">20</option>
+              <option value="">Age from</option>
+              <option value="18">18</option>
+              <option value="25">25</option>
+              <option value="30">30</option>
             </select>
             <select className="form-select">
-              <option value="">36</option>
-              <option value="37">37</option>
-              <option value="38">38</option>
+              <option value="">Age to</option>
+              <option value="35">35</option>
+              <option value="40">40</option>
+              <option value="50">50</option>
             </select>
           </div>
           <select className="form-select">
-            <option value="">Choose Your Country</option>
+            <option value="">Location</option>
             <option value="us">United States</option>
             <option value="uk">United Kingdom</option>
+            <option value="ca">Canada</option>
           </select>
-          <select className="form-select">
-            <option value="">Your Interests</option>
-            <option value="music">Music</option>
-            <option value="sports">Sports</option>
-          </select>
-          <button type="button" className="find-partner-btn">Find Your Partner</button>
+          <button type="button" className="find-partner-btn">Search</button>
         </form>
       </div>
     </div>
@@ -1005,19 +809,21 @@ const SearchWidget = () => {
 };
 
 const YouMayLikeWidget = () => {
-  const widgetImages = [w1, w2, w3, w4, w5, w6, w7, w8, w9];
+  const suggestions = mockFriends.slice(0, 9);
 
   return (
     <div className="widget like-widget">
       <div className="widget-header">
-        <h5>You May Like</h5>
+        <h5>People You May Know</h5>
       </div>
       <div className="widget-content">
         <div className="like-grid">
-          {widgetImages.map((image, i) => (
+          {suggestions.map((person, i) => (
             <div key={i} className="like-item">
-              <img src={image} alt="potential match" />
-              <Heart fill="red" color="red" size={20} className="heart-icon" />
+              <img src={person.image} alt="suggestion" />
+              <div className="like-overlay">
+                <Heart size={20} className="heart-icon" />
+              </div>
             </div>
           ))}
         </div>
@@ -1038,7 +844,7 @@ const JoinFriendsWidget = () => {
           <p>Collaboratively fabricate best breed and applications through visionary</p>
           <div className="group-members">
             <div className="member-avatars">
-              {[gm1, gm2, gm3, gm4, gm5, gm6].map((avatar, i) => (
+              {mockGroupMembers.map((avatar, i) => (
                 <img key={i} src={avatar} alt="Member" />
               ))}
             </div>
@@ -1052,7 +858,7 @@ const JoinFriendsWidget = () => {
           <p>Collaboratively fabricate best breed and applications through visionary</p>
           <div className="group-members">
             <div className="member-avatars">
-              {[gm1, gm2, gm3, gm4, gm5, gm6].map((avatar, i) => (
+              {mockGroupMembers.map((avatar, i) => (
                 <img key={i} src={avatar} alt="Member" />
               ))}
             </div>
@@ -1065,39 +871,24 @@ const JoinFriendsWidget = () => {
   );
 };
 
+// Main Profile Page Component
 const ProfilePage = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const passedData = location.state?.userData;
-
   const [activeTab, setActiveTab] = useState("activity");
   const [showAddFriends, setShowAddFriends] = useState(false);
   const [showChat, setShowChat] = useState(false);
-  const [profileImage, setProfileImage] = useState(getFullImageUrl(passedData?.image_url, c1));
-  const [coverImage, setCoverImage] = useState(getFullImageUrl(passedData?.cover_image, c2));
+  const [profileImage, setProfileImage] = useState(defaultAvatar);
+  const [coverImage, setCoverImage] = useState(defaultCover);
 
-  const userData = useMemo(() => {
-    const safeImage = (img) => (img && img !== "null" ? img : defaultAvatar);
-
-    return {
-      ...passedData,
-      friends: [
-        { id: 1, name: "Jenifer Guido", image: safeImage(m1), active: "1 Day" },
-        { id: 2, name: "Andrea Guido", image: safeImage(m2), active: "2 Day" },
-        { id: 3, name: "Anna Hawk", image: safeImage(m3), active: "5 Day" },
-        { id: 4, name: "Andreas Adam", image: safeImage(m4), active: "4 Day" },
-        { id: 5, name: "Alaina T", image: safeImage(m5), active: "1 Day" },
-        { id: 6, name: "Aron Smith", image: safeImage(m6), active: "3 Day" },
-        { id: 7, name: "Helen Gomz", image: safeImage(m7), active: "3 Day" },
-        { id: 8, name: "Andrez Jr", image: safeImage(m8), active: "5 Day" },
-      ],
-      photos: [
-        safeImage(m1), safeImage(m2), safeImage(m3), safeImage(m4),
-        safeImage(m5), safeImage(m6), safeImage(m7), safeImage(m8),
-        safeImage(m9), safeImage(m10), safeImage(m11), safeImage(m12),
-      ],
-    };
-  }, [passedData]);
+  const userData = useMemo(() => ({
+    name: 'William Smith',
+    f_name: 'William Smith',
+    gender: 'Male',
+    age: 28,
+    location: 'New York, USA',
+    image: defaultAvatar,
+    friends: mockFriends,
+    photos: mockPhotos,
+  }), []);
 
   const handleAddFriend = () => setShowAddFriends(true);
   const handlePrivateMessage = () => setShowChat(true);
@@ -1107,7 +898,6 @@ const ProfilePage = () => {
     if (file) {
       const newImageUrl = URL.createObjectURL(file);
       setProfileImage(newImageUrl);
-      // Optionally, upload to server here
     }
   };
 
@@ -1116,7 +906,6 @@ const ProfilePage = () => {
     if (file) {
       const newImageUrl = URL.createObjectURL(file);
       setCoverImage(newImageUrl);
-      // Optionally, upload to server here
     }
   };
 
@@ -1198,6 +987,7 @@ const ProfilePage = () => {
         onClose={() => setShowChat(false)}
         userData={userData}
       />
+
     </div>
   );
 };
