@@ -95,12 +95,12 @@ const ProfileHeader = ({ userData, onAddFriend, onPrivateMessage, onProfileImage
           <div className="profile-action-buttons">
             <button onClick={onAddFriend} className="action-btn add-friend-btn">
               <UserPlus size={18} />
-              <span>Add Friend</span>
+              {/* <span>Add Friend</span> */}
             </button>
             
             <button onClick={onPrivateMessage} className="action-btn private-msg-btn">
               <MessageCircle size={18} />
-              <span>Message</span>
+              {/* <span>Message</span> */}
             </button>
           </div>
         </div>

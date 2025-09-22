@@ -18,6 +18,8 @@ const RegisterForm = lazy(() => import("../pages/register/RegisterForm"));
 const MembershipPlans = lazy(() => import("../pages/pricing/MembershipPlan"));
 const ProfilePage = lazy(() => import("../pages/profile/ProfilePage"));
 const ChatInterface = lazy(() => import("../components/chats/ChatInterface"));
+const ViewProfile = lazy(() => import("../components/chats/ViewProfile"));
+
 const PaymentPage = lazy(() => import("../pages/payment/PaymentPage"));
 const EditProfile = lazy(() => import("../pages/profile/editProfile/Edit"));
 const router = createBrowserRouter([
@@ -67,6 +69,10 @@ const router = createBrowserRouter([
       {
         path: "/chat",
         element: <ChatInterface />,
+      },
+      {
+        path: "/view-profile",
+        element: <ViewProfile />,
       },
       {
         path: "/payment",

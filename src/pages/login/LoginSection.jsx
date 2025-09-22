@@ -283,22 +283,6 @@ const LoginSection = () => {
                     <p>No harassment, abuse, or inappropriate content allowed.</p>
                   </div>
                 </div>
-                
-                <div className="term-item">
-                  <span className="term-number">3</span>
-                  <div>
-                    <strong>Authentic Information:</strong>
-                    <p>Provide truthful and accurate information in your profile.</p>
-                  </div>
-                </div>
-                
-                <div className="term-item">
-                  <span className="term-number">4</span>
-                  <div>
-                    <strong>Subscription Fee:</strong>
-                    <p>All subscription fees are non-refundable.</p>
-                  </div>
-                </div>
               </div>
             </div>
 
@@ -324,8 +308,6 @@ const LoginSection = () => {
           </div>
         </div>
       )}
-
-     
     </div>
   );
 };
