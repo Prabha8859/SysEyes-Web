@@ -248,7 +248,7 @@ const handleFinalSubmit = async () => {
       heart.style.left = Math.random() * 100 + "%";
       heart.style.animationDuration = Math.random() * 5 + 3 + "s";
       heartContainer.appendChild(heart);
-      setTimeout(() => heart.remove(), 8000);
+      setTimeout(() => heart.remove(), 8000);   
     }, 500);
 
     return () => clearInterval(interval);
